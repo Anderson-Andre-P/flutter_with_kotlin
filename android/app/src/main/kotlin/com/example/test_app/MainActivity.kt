@@ -2,12 +2,17 @@ package com.example.flutter_with_kotlin
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import io.flutter.embedding.android.FlutterActivity
 import io.flutter.embedding.engine.FlutterEngine
 import io.flutter.plugin.common.MethodChannel
+
+import android.widget.Button
+import android.widget.RelativeLayout
+
 
 class MainActivity : FlutterActivity() {
     private val channelName = "uniqueChannelName"
@@ -27,7 +32,7 @@ class MainActivity : FlutterActivity() {
                 "openNewScreen" -> {
                     val intent = Intent(this, NewScreenActivity::class.java)
                     startActivity(intent)
-                    result.success(null) 
+                    result.success("Opened New Screen")
                 }
 
                 else -> {
@@ -44,7 +49,19 @@ class NewScreenActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_new_screen)
 
-        val textView: TextView = findViewById(R.id.textViewMessage)
-        textView.text = "Wellcome to Kotlin screen!"
+        val backButton = Button(this).apply {
+            text = "Return"
+            setOnClickListener {
+                finish()
+            }
+        }
+
+        val layout = findViewById<RelativeLayout>(R.id.relativeLayout)
+        layout.addView(backButton)
+    }
+
+    fun onClickButton(view: View?) {
+        finish()
     }
 }
+
